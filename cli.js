@@ -8,7 +8,7 @@ const main = async () => {
     await sequelize.authenticate()
     console.log('Connection has been established successfully.')
     const blogs = await sequelize.query('SELECT * FROM blogs', {type: QueryTypes.SELECT})
-    for (blog of blogs) {
+    for (const blog of blogs) {
       console.log(`${blog.author}: ${blog.title}, ${blog.likes} likes`)
     }
     sequelize.close()
