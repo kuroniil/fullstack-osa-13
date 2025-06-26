@@ -31,10 +31,20 @@ router.post('/', tokenExtractor, async (req, res) => {
   res.json(addedBlog)
 })
 
-router.delete('/:id', async (req, res) => {
-  const targetBlog = await Blog.findByPk(req.params.id)
-  await targetBlog.destroy()
-  res.status(204).end()
+router.delete('/:id', tokenExtractor, async (req, res) => {
+  const user = await User.findByPk(req.decodedToken.id)
+  const targetBlog = await Blog.findByPk(req.params.id, 
+  {include: {
+      model: User,
+      attributes: ['id']
+    }})
+  if (!targetBlog) {
+    res.status(400).end()
+  }
+  if (targetBlog.userId === user.id) {
+      await targetBlog.destroy()
+      res.status(204).end()
+  }
 })
 
 router.put('/:id', async (req, res) => {
