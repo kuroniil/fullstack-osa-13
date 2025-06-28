@@ -27,7 +27,8 @@ router.get('/', async (req, res) => {
             ? '%' + queryWord + '%' 
             : '%'
         }}
-    ]}
+    ]},
+    order: [['likes', 'DESC']]
   })
   res.json(blogs)
 })
