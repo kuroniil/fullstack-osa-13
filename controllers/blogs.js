@@ -3,10 +3,25 @@ const jwt = require('jsonwebtoken')
 
 const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
+const { Op } = require('sequelize')
+
 
 router.get('/', async (req, res) => {
-  const blogs = await Blog.findAll({include: {
-    model: User
+  let queryWord = ""
+  if (req.query.search) {
+    queryWord = req.query.search
+  }
+
+  const blogs = await Blog.findAll({
+    include: {
+      model: User
+    },
+    where: {
+      title: {
+        [Op.iLike]: queryWord 
+          ? '%' + queryWord + '%' 
+          : '%'
+      }
     }
   })
   res.json(blogs)
