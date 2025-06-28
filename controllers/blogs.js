@@ -16,13 +16,18 @@ router.get('/', async (req, res) => {
     include: {
       model: User
     },
-    where: {
-      title: {
-        [Op.iLike]: queryWord 
-          ? '%' + queryWord + '%' 
-          : '%'
-      }
-    }
+    where: {[Op.or]: 
+        [{title: {
+          [Op.iLike]: queryWord 
+            ? '%' + queryWord + '%' 
+            : '%'
+        }},
+        {author: {
+          [Op.iLike]: queryWord 
+            ? '%' + queryWord + '%' 
+            : '%'
+        }}
+    ]}
   })
   res.json(blogs)
 })
