@@ -51,25 +51,13 @@ module.exports = {
       }
     })
 
-    await queryInterface.addColumn('blogs', 'user_id', {
+    await queryInterface.addColumn('blogs', 'year', {
       type: DataTypes.INTEGER,
-      allowNull: false,
-      references: { model: 'users', key: 'id' },
-    })
-
-    await queryInterface.addColumn('blogs', 'created_at', {
-      type: DataTypes.DATE,
-      allowNull: false,
-    })
-
-    await queryInterface.addColumn('blogs', 'updated_at', {
-      type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: false
     })
 
   },
   down: async ({ context: queryInterface }) => {
-    await queryInterface.removeColumn('blogs', 'created_at')
-    await queryInterface.removeColumn('blogs', 'updated_at')
+    await queryInterface.removeColumn('blogs', 'year')
   },
 }

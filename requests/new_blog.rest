@@ -1,10 +1,11 @@
 POST http://localhost:3001/api/blogs
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRpbW9AbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzUxNzEwMjI0fQ.PxXhBr-WNiKds8NJMPDGEcXjck8IKeFFV4fFa1vKjGA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRpbW9AbWFpbC5jb20iLCJpZCI6MSwiaWF0IjoxNzUxOTAzMjY3fQ.ip6P84TTIZSuxaXr-vhS4xlvy0qn4R0HUf2YS4BkWwY
 
 {
     "author": "jari",
     "url": "www.blogi.com",
     "likes": "9",
-    "title": "jarin blog"
+    "title": "jarin blog",
+    "year": 1990
 }
