@@ -6,6 +6,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRpb
     "author": "jari",
     "url": "www.blogi.com",
     "likes": "9",
-    "title": "jarin blog",
-    "year": 2026
+    "title": "jarin blog8",  
+    "year": 2023
 }

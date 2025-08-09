@@ -15,20 +15,21 @@ module.exports = {
     },
     })
     await queryInterface.createTable('readinglist_blogs', {
-      id: {
+      blog_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+        references: { model: 'blogs', key: 'id' },
         primaryKey: true,
-        autoIncrement: true
       },
       readinglist_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: { model: 'readinglists', key: 'id' },
     },
-      blog_id: {
-        type: DataTypes.INTEGER,
+      read_state: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        references: { model: 'blogs', key: 'id' },
+        defaultValue: false
       }
     })
   },
