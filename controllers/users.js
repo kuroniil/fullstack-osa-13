@@ -30,29 +30,27 @@ router.put('/:username', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
   const user = await User.findByPk(req.params.id, { 
-    include:
-      {
-        model: Readinglist, 
-        include:
-          {
-            model: ReadinglistBlog, 
-            include: {
-              model: Blog,
-              attributes: ['url', 'title', 'author', 'likes', 'year']
-            },
-          },
-          
+    attributes: ['id', 'name', 'username'],
+    include: {
+      model: Readinglist,
+      attributes: ['id'],
+      include: {
+        model: Blog,
+        attributes: ['url', 'title', 'author', 'likes', 'year'],
+        through: { attributes: ['readinglistId', 'readState'] }
       }
+    }
+
   })
   if (!user.readinglist) {
-      const readinglist = await Readinglist.create({ userId: user.id })
-      user.readinglist = readinglist
-    }
+    const readinglist = await Readinglist.create({ userId: user.id })
+    user.readinglist = readinglist
+  }
     res.json({
       id: user.id,
       name: user.name,
       username: user.username,
-      readings: user.readinglist.readinglistBlogs.map(b => b.blog)
+      readings: user.readinglist.blogs
     })
 })
 

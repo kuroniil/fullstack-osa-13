@@ -15,6 +15,9 @@ ReadinglistBlog.belongsTo(Readinglist)
 Blog.hasMany(ReadinglistBlog)
 ReadinglistBlog.belongsTo(Blog)
 
+Readinglist.belongsToMany(Blog, { through: ReadinglistBlog })
+Blog.belongsToMany(Readinglist, { through: ReadinglistBlog })
+
 module.exports = {
   Blog,
   User,
