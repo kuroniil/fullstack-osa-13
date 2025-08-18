@@ -49,6 +49,9 @@ router.get('/:id', async (req, res) => {
       }
     }
   })
+  if (!user) {
+    res.status(404).end()
+  }
   if (!user.readinglist) {
     const readinglist = await Readinglist.create({ userId: user.id })
     user.readinglist = readinglist

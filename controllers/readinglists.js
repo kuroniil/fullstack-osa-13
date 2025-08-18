@@ -2,7 +2,7 @@ const router = require('express').Router()
 const jwt = require('jsonwebtoken')
 const { SECRET } = require('../util/config')
 
-const { User, ReadinglistBlog, Readinglist } = require('../models')
+const { User, ReadinglistBlog, Readinglist, Session } = require('../models')
 
 const tokenExtractor = (req, res, next) => {
   const authorization = req.get('authorization')
@@ -37,6 +37,10 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', tokenExtractor, async (req, res) => {
   const user = await User.findByPk(req.decodedToken.id)
+  const session = await Session.findByPk(req.decodedToken.sessionId)
+  if (user.disabled || !session || session.userId !== user.id) {
+    res.status(403).end()
+  }
   const readinglist = await Readinglist.findOne({ where: { userId: user.id }})
   const read = typeof req.body.read == 'boolean' ? req.body.read : null
   const blogInReadinglist = await ReadinglistBlog.findOne({ where: { 

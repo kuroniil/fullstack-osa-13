@@ -24,6 +24,7 @@ const migrationConf = {
   context: sequelize.getQueryInterface(),
   logger: console,
 }
+
 const runMigrations = async () => {
   const migrator = new Umzug(migrationConf)
   const migrations = await migrator.up()

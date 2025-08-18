@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 const { Blog, User } = require('../models')
 const { SECRET } = require('../util/config')
 const { Op } = require('sequelize')
+const Session = require('../models/session')
 
 
 router.get('/', async (req, res) => {
@@ -51,12 +52,20 @@ const tokenExtractor = (req, res, next) => {
 
 router.post('/', tokenExtractor, async (req, res) => {
   const user = await User.findByPk(req.decodedToken.id)
+  const session = await Session.findByPk(req.decodedToken.sessionId)
+  if (user.disabled || !session || session.userId !== user.id) {
+    res.status(403).end()
+  }
   const addedBlog = await Blog.create({...req.body, userId: user.id})
   res.json(addedBlog)
 })
 
 router.delete('/:id', tokenExtractor, async (req, res) => {
   const user = await User.findByPk(req.decodedToken.id)
+  const session = await Session.findByPk(req.decodedToken.sessionId)
+  if (user.disabled || !session || session.userId !== user.id) {
+    res.status(403).end()
+  }
   const targetBlog = await Blog.findByPk(req.params.id, 
   {include: {
       model: User,
